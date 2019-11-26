@@ -1,0 +1,28 @@
+{
+  "defaults": {
+    "description": "Longranger wgs workflow test",
+    "metrics_calculate": "calculate.sh",
+    "metrics_compare": "compare.sh",
+    "output_metrics_dir": "/.mounts/labs/gsi/testdata/longranger_wgs/output_metrics/${project.version}",
+    "parameters": {
+      "wdl_options": {
+        "write_to_cache": false,
+        "read_from_cache": false
+      }
+    }
+  },
+  "tests": [
+    {
+      "id": "longranger_wgs_test_01",
+      "parameters": {
+        "wdl_inputs": {
+          "longranger_wgs.runID": "HCC1954N_WGS",
+          "longranger_wgs.fastqDirectory": "/.mounts/labs/gsiprojects/gsi/10XLongRead/test/HCC1954N_WGS_fastqs",
+          "longranger_wgs.reference": "/scratch2/users/amosquera/refdata-GRCh38-1.0.0",
+          "longranger_wgs.sex": "female",
+          "longranger_wgs.vcMode": "freebayes"
+        }
+      }
+    }
+  ]
+}
