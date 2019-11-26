@@ -48,6 +48,7 @@ workflow longranger_wgs {
     author: "Angie Mosquera"
     email: "Angie.Mosquera@oicr.on.ca"
     description: "Workflow that takes demultiplexed FASTQ files from a whole genome sample and performs alignment, de-duplication and filtering, and uses the Chromium molecular barcodes to call and phases SNPs, indels and structural variants."
+    dependencies: []
   }
 }
 
