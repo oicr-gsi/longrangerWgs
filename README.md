@@ -4,10 +4,6 @@ Workflow that takes demultiplexed FASTQ files from a whole genome sample and per
 
 ## Overview
 
-## Dependencies
-
-
-
 ## Usage
 
 ### Cromwell
@@ -49,9 +45,9 @@ Output | Type | Description
 `phasedPossortedBamIndex`|File|Index for phased_possorted_bam.bam
 `vcfPhased`|File|VCF annotated with barcode and phasing information.
 `vcfIndex`|File|Index for phased_variants.vcf.gz
-`largeScaleSVCalls`|File|Large-scale (â¥30Kbp or inter-chromosomal) structural variant and CNV calls, excluding low confidence candidates, in BEDPE format.
-`largeScaleSVCandidates`|File|Large-scale (â¥30Kbp or inter-chromosomal) structural variant and CNV calls, including low confidence candidates, in BEDPE format.
-`largeScaleSVs`|File|Large-scale (â¥30Kbp or inter-chromosomal) structural variant and CNV calls, including low confidence candidates, in VCF format.
+`largeScaleSVCalls`|File|Large-scale (>=30Kbp or inter-chromosomal) structural variant and CNV calls, excluding low confidence candidates, in BEDPE format.
+`largeScaleSVCandidates`|File|Large-scale (>=30Kbp or inter-chromosomal) structural variant and CNV calls, including low confidence candidates, in BEDPE format.
+`largeScaleSVs`|File|Large-scale (>=30Kbp or inter-chromosomal) structural variant and CNV calls, including low confidence candidates, in VCF format.
 `largeScaleSVsIndex`|File|Index for large_svs.vcf.gz
 `midscaleDeletions`|File|Mid-scale deletion structural variant calls (50bp-30Kbp).
 `midscaleDeletionsIndex`|File|Index for dels.vcf.gz
