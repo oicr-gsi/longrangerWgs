@@ -1,4 +1,4 @@
-# longranger_wgs
+# longrangerWgs
 
 Workflow that takes demultiplexed FASTQ files from a whole genome sample and performs alignment, de-duplication and filtering, and uses the Chromium molecular barcodes to call and phases SNPs, indels and structural variants.
 
@@ -8,7 +8,7 @@ Workflow that takes demultiplexed FASTQ files from a whole genome sample and per
 
 ### Cromwell
 ```
-java -jar cromwell.jar run longranger_wgs.wdl --inputs inputs.json
+java -jar cromwell.jar run longrangerWgs.wdl --inputs inputs.json
 ```
 
 ### Inputs

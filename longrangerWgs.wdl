@@ -1,6 +1,6 @@
 version 1.0
 
-workflow longranger_wgs {
+workflow longrangerWgs {
   input {
     String runID
     String fastqDirectory

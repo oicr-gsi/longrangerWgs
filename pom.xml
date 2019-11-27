@@ -10,12 +10,12 @@
         <relativePath/>
     </parent>
 
-    <artifactId>longranger_wgs</artifactId>
+    <artifactId>longrangerWgs</artifactId>
     <version>1.0</version>
 
     <properties>
         <workflow-description>Workflow to process fastq files through longranger wgs.</workflow-description>
-        <wdl-workflow>longranger_wgs.wdl</wdl-workflow>
+        <wdl-workflow>longrangerWgs.wdl</wdl-workflow>
         <test-definition>tests.json</test-definition>
     </properties>
 
