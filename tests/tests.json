@@ -18,7 +18,7 @@
         "wdl_inputs": {
           "longrangerWgs.runID": "HCC1954N_WGS",
           "longrangerWgs.fastqDirectory": "/.mounts/labs/gsiprojects/gsi/10XLongRead/test/HCC1954N_WGS_fastqs",
-          "longrangerWgs.reference": "/scratch2/users/amosquera/refdata-GRCh38-1.0.0",
+          "longrangerWgs.reference": "/.mounts/labs/gsi/modulator/sw/data/refdata-grch38-1.0.0",
           "longrangerWgs.sex": "female",
           "longrangerWgs.vcMode": "freebayes"
         }
