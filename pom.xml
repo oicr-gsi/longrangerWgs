@@ -16,7 +16,7 @@
     <properties>
         <workflow-description>Workflow to process fastq files through longranger wgs.</workflow-description>
         <wdl-workflow>longrangerWgs.wdl</wdl-workflow>
-        <test-definition>tests.json</test-definition>
+        <test-basedir>tests/</test-basedir>
     </properties>
 
 </project>

@@ -3,17 +3,25 @@ version 1.0
 workflow longrangerWgs {
   input {
     String runID
-    String fastqDirectory
+    String? samplePrefix
+    Array[File] fastqs
     String referenceDirectory
     String? sex
     String? vcMode
     String? precalled
   }
 
+  call symlinkFastqs {
+    input:
+      samplePrefix = samplePrefix,
+      fastqs = fastqs
+  }
+
   call wgs {
     input:
       runID = runID,
-      fastqDirectory = fastqDirectory,
+      samplePrefix = samplePrefix,
+      fastqDirectory = symlinkFastqs.fastqDirectory,
       referenceDirectory = referenceDirectory,
       sex = sex,
       vcMode = vcMode,
@@ -37,7 +45,8 @@ workflow longrangerWgs {
 
   parameter_meta {
     runID: "A unique run ID string."
-    fastqDirectory: "Path to folder containing fastq files."
+    samplePrefix: "Sample name (FASTQ file prefix). Can take multiple comma-separated values."
+    fastqDirectory: "Path to folder containing symlinked fastq files."
     referenceDirectory: "Path to 10x compatible reference."
     sex: "(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied."
     vcMode: "(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'."
@@ -52,21 +61,54 @@ workflow longrangerWgs {
   }
 }
 
+task symlinkFastqs {
+  input {
+    Array[File] fastqs
+    String? samplePrefix
+  }
+
+  command <<<
+    mkdir ~{samplePrefix}
+    while read line ; do
+      ln -s $line ~{samplePrefix}/$(basename $line)
+    done < ~{write_lines(fastqs)}
+    echo $PWD/~{samplePrefix}
+  >>>
+
+  output {
+     String fastqDirectory = read_string(stdout())
+  }
+
+  parameter_meta {
+    fastqs: "Array of input fastqs."
+  }
+
+  meta {
+    output_meta: {
+      fastqDirectory: "Path to folder containing symlinked fastq files."
+    }
+  }
+}
+
 task wgs {
   input {
     String? modules = "longranger"
     String? longranger = "longranger"
     String runID
+    String? samplePrefix
     String fastqDirectory
     String referenceDirectory
     String? sex
     String? vcMode
     String? precalled
+    Int mem = 256
+    Int timeout = 72
   }
 
   command <<<
    ~{longranger} wgs \
    --id "~{runID}" \
+   ~{"--sample"} "~{samplePrefix}" \
    --fastqs "~{fastqDirectory}" \
    --reference "~{referenceDirectory}" \
    ~{"--sex"} "~{sex}" \
@@ -75,27 +117,30 @@ task wgs {
   >>>
 
   runtime {
+    memory: "~{mem} GB"
     modules: "~{modules}"
+    timeout: "~{timeout}"
   }
 
   output {
-    File runSummary = "outs/summary.csv"
-    File phasedPossortedBam = "outs/phased_possorted_bam.bam"
-    File phasedPossortedBamIndex = "outs/phased_possorted_bam.bam.bai"
-    File vcfPhased = "outs/phased_variants.vcf.gz"
-    File vcfIndex = "outs/phased_variants.vcf.gz.tbi"
-    File largeScaleSVCalls = "outs/large_sv_calls.bedpe"
-    File largeScaleSVCandidates = "outs/large_sv_candidates.bedpe"
-    File largeScaleSVs = "outs/large_svs.vcf.gz"
-    File largeScaleSVsIndex = "outs/large_svs.vcf.gz.tbi"
-    File midscaleDeletions = "outs/dels.vcf.gz"
-    File midscaleDeletionsIndex = "outs/dels.vcf.gz.tbi"
-    File loupe = "outs/loupe.loupe"
+    File runSummary = "~{runID}/outs/summary.csv"
+    File phasedPossortedBam = "~{runID}/outs/phased_possorted_bam.bam"
+    File phasedPossortedBamIndex = "~{runID}/outs/phased_possorted_bam.bam.bai"
+    File vcfPhased = "~{runID}/outs/phased_variants.vcf.gz"
+    File vcfIndex = "~{runID}/outs/phased_variants.vcf.gz.tbi"
+    File largeScaleSVCalls = "~{runID}/outs/large_sv_calls.bedpe"
+    File largeScaleSVCandidates = "~{runID}/outs/large_sv_candidates.bedpe"
+    File largeScaleSVs = "~{runID}/outs/large_svs.vcf.gz"
+    File largeScaleSVsIndex = "~{runID}/outs/large_svs.vcf.gz.tbi"
+    File midscaleDeletions = "~{runID}/outs/dels.vcf.gz"
+    File midscaleDeletionsIndex = "~{runID}/outs/dels.vcf.gz.tbi"
+    File loupe = "~{runID}/outs/loupe.loupe"
   }
 
   parameter_meta {
     runID: "A unique run ID string."
-    fastqDirectory: "Path to folder containing fastq files."
+    samplePrefix: "Sample name (FASTQ file prefix). Can take multiple comma-separated values."
+    fastqDirectory: "Path to folder containing symlinked fastq files."
     referenceDirectory: "Path to 10x compatible reference."
     sex: "(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied."
     vcMode: "(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'."
