@@ -65,6 +65,7 @@ task symlinkFastqs {
   input {
     Array[File] fastqs
     String? samplePrefix
+    Int mem = 1
   }
 
   command <<<
@@ -74,6 +75,10 @@ task symlinkFastqs {
     done < ~{write_lines(fastqs)}
     echo $PWD/~{samplePrefix}
   >>>
+
+  runtime {
+    memory: "~{mem} GB"
+  }
 
   output {
      String fastqDirectory = read_string(stdout())
