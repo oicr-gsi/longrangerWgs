@@ -3,7 +3,7 @@
     "description": "Longranger wgs workflow test",
     "metrics_calculate": "calculate.sh",
     "metrics_compare": "compare.sh",
-    "output_metrics_dir": "/.mounts/labs/gsi/testdata/longrangerWgs/output_metrics/${project.version}",
+    "output_metrics_dir": "/.mounts/labs/gsi/testdata/longrangerWgs/output_metrics/1.0",
     "parameters": {
       "wdl_options": {
         "write_to_cache": false,
@@ -13,11 +13,15 @@
   },
   "tests": [
     {
-      "id": "longrangerWgs_test_01",
+      "id": "HTWNKBCXY-test",
       "parameters": {
         "wdl_inputs": {
-          "longrangerWgs.runID": "HCC1954N_WGS",
-          "longrangerWgs.fastqDirectory": "/.mounts/labs/gsiprojects/gsi/10XLongRead/test/HCC1954N_WGS_fastqs",
+          "longrangerWgs.runID": "HTWNKBCXY_WGS",
+          "longrangerWgs.samplePrefix": "10XT_0004_Ln_C_PE_521_WG",
+          "longrangerWgs.fastqs": [
+            "/.mounts/labs/gsi/testdata/longrangerWgs/input_data/10XT_0004_Ln_C_PE_521_WG_S1_L001_R1_001.fastq.gz",
+            "/.mounts/labs/gsi/testdata/longrangerWgs/input_data/10XT_0004_Ln_C_PE_521_WG_S1_L001_R2_001.fastq.gz"
+          ],
           "longrangerWgs.referenceDirectory": "/.mounts/labs/gsi/modulator/sw/data/refdata-grch38-1.0.0",
           "longrangerWgs.sex": "female",
           "longrangerWgs.vcMode": "freebayes"

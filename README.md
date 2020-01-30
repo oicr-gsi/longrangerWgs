@@ -17,13 +17,15 @@ java -jar cromwell.jar run longrangerWgs.wdl --inputs inputs.json
 Parameter|Value|Description
 ---|---|---
 `runID`|String|A unique run ID string.
-`fastqDirectory`|String|Path to folder containing fastq files.
+`samplePrefix`|String|Sample name (FASTQ file prefix). Can take multiple comma-separated values.
+`fastqs`|Array[File]|Array of input fastqs.
 `referenceDirectory`|String|Path to 10x compatible reference.
 
 
 #### Optional workflow parameters:
 Parameter|Value|Default|Description
 ---|---|---|---
+`samplePrefix`|String?|None|Sample name (FASTQ file prefix). Can take multiple comma-separated values.
 `sex`|String?|None|(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied.
 `vcMode`|String?|None|(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'.
 `precalled`|String?|None|(Optional) Path to a 'pre-called' VCF file. Variants in this file will be phased. When setting --precalled, do not specifiy a --vcmode.
@@ -34,6 +36,8 @@ Parameter|Value|Default|Description
 ---|---|---|---
 `wgs.modules`|String?|"longranger"|Environment module name to load before command execution.
 `wgs.longranger`|String?|"longranger"|
+`wgs.mem`|Int|128|
+`wgs.timeout`|Int|72|
 
 
 ### Outputs
