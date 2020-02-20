@@ -9,6 +9,7 @@ workflow longrangerWgs {
     String? sex
     String? vcMode
     String? precalled
+    Int? timeout
   }
 
   call symlinkFastqs {
@@ -25,7 +26,8 @@ workflow longrangerWgs {
       referenceDirectory = referenceDirectory,
       sex = sex,
       vcMode = vcMode,
-      precalled = precalled
+      precalled = precalled,
+      timeout = timeout
   }
 
   output {
@@ -51,6 +53,7 @@ workflow longrangerWgs {
     sex: "(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied."
     vcMode: "(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'."
     precalled: "(Optional) Path to a 'pre-called' VCF file. Variants in this file will be phased. When setting --precalled, do not specifiy a --vcmode."
+    timeout: "Restricts longranger to run in the specified time budget."
   }
 
   meta {
@@ -150,6 +153,7 @@ task wgs {
     sex: "(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied."
     vcMode: "(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'."
     precalled: "(Optional) Path to a 'pre-called' VCF file. Variants in this file will be phased. When setting --precalled, do not specifiy a --vcmode."
+    timeout: "Restricts longranger to run in the specified time budget."
     modules: "Environment module name to load before command execution."
   }
 

@@ -27,9 +27,9 @@ Parameter|Value|Default|Description
 ---|---|---|---
 `samplePrefix`|String?|None|Sample name (FASTQ file prefix). Can take multiple comma-separated values.
 `sex`|String?|None|(Optional) Sex of the sample: male or female. Sex will be detected based on coverage if not supplied.
-`vcMode`|String?|None|(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'.
+`vcMode`|String?|freebayes|(Required, except when specifying --precalled) Must be one of: 'freebayes', 'gatk:/path/to/GenomeAnalysisTK.jar', or 'disable'.
 `precalled`|String?|None|(Optional) Path to a 'pre-called' VCF file. Variants in this file will be phased. When setting --precalled, do not specifiy a --vcmode.
-
+`timeout`|Int?|168h|Restricts longranger to run in the specified time budget.
 
 #### Optional task parameters:
 Parameter|Value|Default|Description
@@ -37,8 +37,6 @@ Parameter|Value|Default|Description
 `wgs.modules`|String?|"longranger"|Environment module name to load before command execution.
 `wgs.longranger`|String?|"longranger"|
 `wgs.mem`|Int|128|
-`wgs.timeout`|Int|72|
-
 
 ### Outputs
 
